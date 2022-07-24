@@ -1,0 +1,10 @@
+{
+    "member": {
+        "type": "C",
+        "class": "\\IPS\\Member"
+    },
+    "register": {
+        "type": "C",
+        "class": "\\IPS\\core\\modules\\front\\system\\register"
+    }
+}

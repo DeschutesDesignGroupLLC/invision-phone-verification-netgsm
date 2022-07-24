@@ -1,0 +1,10 @@
+{
+    "core": {
+        "MemberForm": {
+            "PhoneNumber": "IPS\\netgsm\\extensions\\core\\MemberForm\\PhoneNumber"
+        },
+        "MemberSync": {
+            "UpdatePhoneVerifications": "IPS\\netgsm\\extensions\\core\\MemberSync\\UpdatePhoneVerifications"
+        }
+    }
+}

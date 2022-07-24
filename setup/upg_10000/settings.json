@@ -1,0 +1,12 @@
+{
+    "added": {
+        "1": "netgsm_default_country_code",
+        "2": "netgsm_enabled",
+        "3": "netgsm_password",
+        "4": "netgsm_sender_name",
+        "5": "netgsm_text_message",
+        "6": "netgsm_usercode"
+    },
+    "edited": [],
+    "removed": []
+}

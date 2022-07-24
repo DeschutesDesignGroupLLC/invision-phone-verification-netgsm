@@ -1,0 +1,45 @@
+{
+    "normal": {
+        "added": {
+            "0": "__app_netgsm",
+            "1": "menutab__netgsm",
+            "2": "menutab__netgsm_icon",
+            "3": "menu__netgsm_system",
+            "4": "menu__netgsm_system_settings",
+            "5": "netgsm_phone_verification_settings",
+            "6": "netgsm_settings",
+            "7": "netgsm_enabled",
+            "10": "netgsm_enabled_desc",
+            "11": "netgsm_usercode",
+            "12": "netgsm_password",
+            "13": "netgsm_sender_name",
+            "14": "netgsm_text_message",
+            "15": "netgsm_text_message_desc",
+            "16": "netgsm_default_country_code",
+            "17": "netgsm_default_country_code_desc",
+            "18": "netgsm_confirm_phone",
+            "19": "netgsm_confirm_phone_desc",
+            "20": "netgsm_confirm_phone_sent_desc",
+            "21": "netgsm_phone",
+            "22": "netgsm_phone_desc",
+            "23": "netgsm_verified",
+            "24": "netgsm_phone_country",
+            "25": "netgsm_change_phone",
+            "26": "netgsm_send_text",
+            "27": "netgsm_resend_text",
+            "28": "netgsm_confirm_code",
+            "29": "netgsm_code",
+            "30": "netgsm_code_resent",
+            "31": "netgsm_code_invalid",
+            "32": "netgsm_code_verified",
+            "33": "member__netgsm_PhoneNumber"
+        },
+        "edited": [],
+        "removed": []
+    },
+    "js": {
+        "added": [],
+        "edited": [],
+        "removed": []
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "system": {
+        "settings": {
+            "tab": "netgsm",
+            "controller": "settings",
+            "do": "",
+            "restriction": "settings_manage",
+            "subcontrollers": ""
+        }
+    }
+}

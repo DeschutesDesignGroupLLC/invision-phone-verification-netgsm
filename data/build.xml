@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build>
+ <module key="admin/system"><![CDATA[{"default_controller":"","protected":0,"default":1}]]></module>
+ <module key="front/system"><![CDATA[{"default_controller":"register","protected":1,"default":1}]]></module>
+ <setting key="netgsm_default_country_code"><![CDATA[{"key":"netgsm_default_country_code","default":""}]]></setting>
+ <setting key="netgsm_enabled"><![CDATA[{"key":"netgsm_enabled","default":"0"}]]></setting>
+ <setting key="netgsm_password"><![CDATA[{"key":"netgsm_password","default":""}]]></setting>
+ <setting key="netgsm_sender_name"><![CDATA[{"key":"netgsm_sender_name","default":""}]]></setting>
+ <setting key="netgsm_text_message"><![CDATA[{"key":"netgsm_text_message","default":"Your verification code is {code}."}]]></setting>
+ <setting key="netgsm_usercode"><![CDATA[{"key":"netgsm_usercode","default":""}]]></setting>
+ <hook key="member"><![CDATA[{"type":"C","class":"\\IPS\\Member"}]]></hook>
+ <hook key="register"><![CDATA[{"type":"C","class":"\\IPS\\core\\modules\\front\\system\\register"}]]></hook>
+</build>

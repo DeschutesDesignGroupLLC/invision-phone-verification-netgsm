@@ -1,0 +1,29 @@
+<ips:template parameters="$sent=false, $phoneNumber = null" />
+<section class='ipsType_center ipsBox ipsPadding'>
+	<br><br>
+	<i class='ipsType_huge fa fa-phone'></i>
+	<h1 class='ipsType_veryLarge'>{lang="netgsm_confirm_phone"}</h1>
+
+	<p class='ipsType_large'>
+	    {{if $sent}}
+            {lang="netgsm_confirm_phone_sent_desc" sprintf="$phoneNumber"}
+	    {{else}}
+            {lang="netgsm_confirm_phone_desc"}
+	    {{endif}}
+	</p>
+	<p class='ipsType_large'>
+	</p>
+	<hr class='ipsHr'>
+	<p class='ipsType_normal'>
+		<ul class='ipsToolList ipsToolList_horizontal ipsPos_center'>
+		    {{if $sent}}
+                <li><a href='{url="app=netgsm&module=system&controller=register&do=confirmTextMessage"}' data-ipsDialog data-ipsDialog-size='narrow' data-ipsDialog-title='{lang="netgsm_confirm_code"}' data-ipsDialog-modal='true' class='ipsButton ipsButton_primary ipsButton_verySmall'>{lang="netgsm_confirm_code"}</a></li>
+		        <li><a href='{url="app=netgsm&module=system&controller=register&do=resendTextMessage"}' class='ipsButton ipsButton_light ipsButton_verySmall'>{lang="netgsm_resend_text"}</a></li>
+		        <li><a href='{url="app=netgsm&module=system&controller=register&do=sendTextMessage"}' data-ipsDialog data-ipsDialog-size='narrow' data-ipsDialog-title='{lang="netgsm_change_phone"}' data-ipsDialog-modal='true' class='ipsButton ipsButton_light ipsButton_verySmall'>{lang="netgsm_change_phone"}</a></li>
+		    {{else}}
+		        <li><a href='{url="app=netgsm&module=system&controller=register&do=sendTextMessage" csrf="true"}' data-ipsDialog data-ipsDialog-size='narrow' data-ipsDialog-title='{lang="netgsm_send_text"}' data-ipsDialog-modal='true' class='ipsButton ipsButton_primary ipsButton_verySmall'>{lang="netgsm_send_text"}</a></li>
+		    {{endif}}
+		    <li><a href='{url="app=core&module=system&controller=register&do=cancel" csrf="true" seoTemplate="register"}' class='ipsButton ipsButton_light ipsButton_verySmall' data-confirm data-confirmMessage='{lang="reg_cancel"}' data-confirmSubMessage='{lang="reg_cancel_confirm"}'>{lang="reg_cancel"}</a></li>
+		</ul>
+	</p>
+</section>

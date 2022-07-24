@@ -1,0 +1,26 @@
+[
+    {
+        "key": "netgsm_default_country_code",
+        "default": ""
+    },
+    {
+        "key": "netgsm_enabled",
+        "default": "0"
+    },
+    {
+        "key": "netgsm_password",
+        "default": ""
+    },
+    {
+        "key": "netgsm_sender_name",
+        "default": ""
+    },
+    {
+        "key": "netgsm_text_message",
+        "default": "Your verification code is {code}."
+    },
+    {
+        "key": "netgsm_usercode",
+        "default": ""
+    }
+]
