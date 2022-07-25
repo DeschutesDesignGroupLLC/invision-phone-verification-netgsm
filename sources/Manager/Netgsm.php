@@ -367,7 +367,7 @@ class _Netgsm
 	 */
 	public function composeTextMessage($code)
 	{
-		$message = \IPS\Settings::i()->netgsm_text_message;
+		$message = \IPS\Settings::i()->netgsm_registration_text_message;
 		if (str_contains($message, '{code}')) {
 			return str_replace('{code}', $code, $message);
 		}

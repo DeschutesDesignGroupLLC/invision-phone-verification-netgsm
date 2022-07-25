@@ -12,17 +12,26 @@ $lang = array(
 	// System Module
 
 	// Settings Controller
-	'netgsm_phone_verification_settings' => 'Phone Verification Settings',
-	'netgsm_settings' => 'NETGSM Settings',
-	'netgsm_enabled' => 'Enable Phone Verification',
-	'netgsm_enabled_desc' => 'Check to enable phone verification when registering. This will replace the default email verification used by Invision Community.',
+	'netgsm_system_tab' => 'System',
+	'netgsm_system_header' => 'NETGSM Settings',
+	'netgsm_system_message' => 'This application supports international phone numbers. In order to properly validate a phone number, the country needs to be specified when saving a phone number. You can set the default country below. A member can always change the country when entering their phone number.',
 	'netgsm_usercode' => 'Usercode',
 	'netgsm_password' => 'Password',
 	'netgsm_sender_name' => 'Sender Name',
-	'netgsm_text_message' => 'Text Message',
-	'netgsm_text_message_desc' => 'The message that will be sent to their phone. The variable {code} will be replace with the actual validation code.',
 	'netgsm_default_country_code' => 'Default Country Code',
 	'netgsm_default_country_code_desc' => 'The default selected country code when a member is entering their phone number.',
+	'netgsm_registration_tab' => 'Registration',
+	'netgsm_registration_header' => 'Verification',
+	'netgsm_registration_enabled' => 'Enabled',
+	'netgsm_registration_enabled_desc' => 'Check to enable phone verification when registering. This will replace the default email verification used by Invision Community.',
+	'netgsm_registration_text_message' => 'Text Message',
+	'netgsm_registration_text_message_desc' => 'The message that will be sent to their phone. The variable {code} will be replace with the actual validation code.',
+	'netgsm_birthday_tab' => 'Birthday Text',
+	'netgsm_birthday_header' => 'Automatic Text',
+	'netgsm_birthday_enabled' => 'Enabled',
+	'netgsm_birthday_enabled_desc' => 'Send a text to member\'s on their birthday.',
+	'netgsm_birthday_text_message' => 'Text Message',
+	'netgsm_birthday_text_message_desc' => 'The message to send to a member on their birthday.',
 
 	// Validation
 	'netgsm_confirm_phone' => 'Please confirm your phone number',
@@ -42,5 +51,8 @@ $lang = array(
 	'netgsm_code_verified' => 'You account has been successfully verified.',
 
 	// Extensions
-	'member__netgsm_PhoneNumber' => 'NETGSM Phone Number'
+	'member__netgsm_PhoneNumber' => 'Phone Number',
+	'profile_netgsm_PhoneNumber' => 'Phone Number',
+	'profile_netgsm_PhoneNumber_header' => 'Manage Phone Number',
+	'profile_netgsm_PhoneNumber_message' => 'Manage the phone number you have saved to your profile. You will be sent a text message to verify any changes.'
 );

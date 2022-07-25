@@ -19,12 +19,28 @@ class netgsm_hook_member extends _HOOK_CLASS_
 	 */
 	public function postRegistration($noEmailValidationRequired = FALSE, $doNotDelete = FALSE, $postBeforeRegister = NULL, $refUrl = NULL)
 	{
-	    if (\IPS\Settings::i()->netgsm_enabled)
+	    if (\IPS\Settings::i()->netgsm_registration_enabled)
 	    {
 	        $netgsmManager = new \IPS\netgsm\Manager\Netgsm();
 	        $netgsmManager->setMemberAsUnverified($this, $refUrl);
         }
 
 	    parent::postRegistration($noEmailValidationRequired, $doNotDelete, $postBeforeRegister, $refUrl);
+    }
+
+	/**
+	 * @return mixed|null
+	 */
+    public function get_phone_number()
+    {
+	    try {
+		    $phone = \IPS\Db::i()->select('*', 'netgsm_verifications', [
+			    'member_id=?', $this->member_id
+            ])->first();
+
+		    return $phone['phone_number'] ?? null;
+	    } catch (\UnderflowException $exception) {}
+
+        return null;
     }
 }

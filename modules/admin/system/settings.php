@@ -44,17 +44,25 @@ class _settings extends \IPS\Dispatcher\Controller
 			$password = \IPS\Text\Encrypt::fromTag(\IPS\Settings::i()->netgsm_password)->decrypt();
 		}
 
-		$form->addHeader('netgsm_phone_verification_settings');
-		$form->add(new \IPS\Helpers\Form\YesNo('netgsm_enabled', \IPS\Settings::i()->netgsm_enabled, true));
-		$form->addHeader('netgsm_settings');
-		$form->addMessage('This application supports international phone numbers. In order to properly validate a phone number, the country needs to be specified when saving a phone number. You can set the default country below. A member can always change the country when entering their phone number.');
+		$form->addTab('netgsm_system_tab');
+		$form->addHeader('netgsm_system_header');
+		$form->addMessage('netgsm_system_message');
 		$form->add(new \IPS\Helpers\Form\Password('netgsm_usercode', $usercode, true));
 		$form->add(new \IPS\Helpers\Form\Password('netgsm_password', $password, true));
 		$form->add(new \IPS\Helpers\Form\Text('netgsm_sender_name', \IPS\Settings::i()->netgsm_sender_name, true));
-		$form->add(new \IPS\Helpers\Form\Text('netgsm_text_message', \IPS\Settings::i()->netgsm_text_message, true));
 		$form->add(new \IPS\Helpers\Form\Select('netgsm_default_country_code', \IPS\Settings::i()->netgsm_default_country_code ?? null, false, [
 			'options' => \IPS\netgsm\Manager\Netgsm::$countryCodes
 		]));
+
+		$form->addTab('netgsm_registration_tab');
+		$form->addHeader('netgsm_registration_header');
+		$form->add(new \IPS\Helpers\Form\YesNo('netgsm_registration_enabled', \IPS\Settings::i()->netgsm_registration_enabled, true));
+		$form->add(new \IPS\Helpers\Form\Text('netgsm_registration_text_message', \IPS\Settings::i()->netgsm_registration_text_message, true));
+
+		$form->addTab('netgsm_birthday_tab');
+		$form->addHeader('netgsm_birthday_header');
+		$form->add(new \IPS\Helpers\Form\YesNo('netgsm_birthday_enabled', \IPS\Settings::i()->netgsm_birthday_enabled, true));
+		$form->add(new \IPS\Helpers\Form\Text('netgsm_birthday_text_message', \IPS\Settings::i()->netgsm_birthday_text_message, false));
 
 		if ($values = $form->values()) {
 			if ($values['netgsm_usercode']) {
