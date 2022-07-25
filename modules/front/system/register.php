@@ -95,22 +95,16 @@ class _register extends \IPS\Dispatcher\Controller
 	 */
 	protected function resendTextMessage()
 	{
-		try {
-			$validation = \IPS\Db::i()->select('*', 'netgsm_verifications', [
-				'member_id' => \IPS\Member::loggedIn()->member_id
-			])->first();
-
+		if ($phoneNumber = \IPS\Member::loggedIn()->phone_number) {
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
 			$code = $netgsmManager->generateRandomCode();
-			$response = $netgsmManager->sendSms($validation['phone_number'], $netgsmManager->composeTextMessage($code));
+			$response = $netgsmManager->sendSms($phoneNumber, $netgsmManager->composeTextMessage($code));
 			$netgsmManager->updateVerificationStatus(\IPS\Member::loggedIn(), [
 				'code' => $code,
 				'code_sent_at' => time()
 			]);
 
 			\IPS\Output::i()->redirect(\IPS\Http\Url::internal(''), 'netgsm_code_resent');
-		} catch (\UnderflowException $e) {}
-
-		\IPS\Output::i()->redirect(\IPS\Http\Url::internal(''), 'netgsm_code_resent');
+		}
 	}
 }

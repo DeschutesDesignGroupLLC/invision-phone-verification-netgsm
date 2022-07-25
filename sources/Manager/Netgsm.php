@@ -424,7 +424,9 @@ class _Netgsm
 		\IPS\Db::i()->delete('core_validating', array('member_id=? and new_reg=1', $member->member_id));
 		$this->updateVerificationStatus($member, [
 			'verified' => 0,
-			'verified_at' => null
+			'verified_at' => null,
+			'code' => null,
+			'code_sent_at' => null
 		]);
 
 		$vid = md5($member->members_pass_hash . \IPS\Login::generateRandomString());

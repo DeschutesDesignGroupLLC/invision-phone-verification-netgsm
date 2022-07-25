@@ -23,21 +23,11 @@ class _PhoneNumber
 	 */
 	public function process( &$form, $member )
 	{
-		$phoneNumber = null;
-		$verified = false;
-		try {
-			$verification = \IPS\Db::i()->select('*', 'netgsm_verifications', [
-				'member_id=?', $member->member_id
-			])->first();
-			$phoneNumber = $verification['phone_number'];
-			$verified = $verification['verified'];
-		} catch (\UnderflowException) {}
-
 		$form->add(new \IPS\Helpers\Form\Select('netgsm_phone_country', \IPS\Settings::i()->netgsm_default_country_code ?? null, false, [
 			'options' => \IPS\netgsm\Manager\Netgsm::$countryCodes
 		]));
-		$form->add(new \IPS\Helpers\Form\Tel('netgsm_phone', $phoneNumber));
-		$form->add(new \IPS\Helpers\Form\YesNo('netgsm_verified', $verified));
+		$form->add(new \IPS\Helpers\Form\Tel('netgsm_phone', $member->phone_number));
+		$form->add(new \IPS\Helpers\Form\YesNo('netgsm_verified', $member->phone_number_verified));
 	}
 	
 	/**
@@ -55,18 +45,14 @@ class _PhoneNumber
 			throw new \DomainException('The phone number you entered is not valid. Please try again.');
 		}
 
-		try {
-			$verification = \IPS\Db::i()->select('*', 'netgsm_verifications', [
-				'member_id=?', $member->member_id
-			])->first();
+		$verified = $member->phone_number_verified;
 
-			if ($verification['verified'] && !$values['netgsm_verified']) {
-				$netgsmManager->setMemberAsUnverified($member);
-			}
-			if (!$verification['verified'] && $values['netgsm_verified']) {
-				$netgsmManager->setMemberAsVerified($member);
-			}
-		} catch (\UnderflowException) {}
+		if ($verified && !$values['netgsm_verified']) {
+			$netgsmManager->setMemberAsUnverified($member);
+		}
+		if (!$verified && $values['netgsm_verified']) {
+			$netgsmManager->setMemberAsVerified($member);
+		}
 
 		$netgsmManager->updateVerificationStatus($member, [
 			'phone_number' => $netgsmManager->formatPhoneNumber($validatedPhoneNumber)

@@ -43,4 +43,21 @@ class netgsm_hook_member extends _HOOK_CLASS_
 
         return null;
     }
+
+	/**
+	 * @return bool
+	 */
+	public function get_phone_number_verified()
+	{
+		try {
+			$phone = \IPS\Db::i()->select('*', 'netgsm_verifications', [
+				['member_id=?', $this->member_id],
+                ['verified=?', 1]
+			])->first();
+
+			return true;
+		} catch (\UnderflowException $exception) {}
+
+		return false;
+	}
 }
