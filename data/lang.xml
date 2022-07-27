@@ -1,27 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
- <app key="netgsm" version="10000">
+ <app key="netgsm" version="10001">
   <word key="__app_netgsm" js="0">Phone Integration By NETGSM</word>
   <word key="menutab__netgsm" js="0">NETGSM</word>
   <word key="menutab__netgsm_icon" js="0">phone</word>
   <word key="menu__netgsm_system" js="0">System</word>
+  <word key="menu__netgsm_system_messages" js="0">Messages</word>
+  <word key="menu__netgsm_system_registrations" js="0">Registrations</word>
   <word key="menu__netgsm_system_settings" js="0">Settings</word>
-  <word key="netgsm_phone_verification_settings" js="0">Phone Verification Settings</word>
-  <word key="netgsm_settings" js="0">NETGSM Settings</word>
-  <word key="netgsm_enabled" js="0">Enable Phone Verification</word>
-  <word key="netgsm_enabled_desc" js="0">Check to enable phone verification when registering. This will replace the default email verification used by Invision Community.</word>
+  <word key="code" js="0">Code</word>
+  <word key="code_sent_at" js="0">Code Sent At</word>
+  <word key="verified" js="0">Verified</word>
+  <word key="verified_at" js="0">Verified At</word>
+  <word key="phone_number" js="0">Phone Number</word>
+  <word key="message" js="0">Message</word>
+  <word key="message_desc" js="0">A message will only be sent to those with a phone number on file that is verified.</word>
+  <word key="message_sent_at" js="0">Message Sent At</word>
+  <word key="recipient_ids" js="0">Recipients</word>
+  <word key="recipient_ids_desc" js="0">Leaving blank will send a message to all members.</word>
+  <word key="netgsm_messages_new" js="0">New Message</word>
+  <word key="netgsm_messages_delete" js="0">Delete Message</word>
+  <word key="netgsm_messages_send" js="0">Send Message</word>
+  <word key="netgsm_messages_send_all_members" js="0">Send Message to All Members</word>
+  <word key="netgsm_messages_deleted" js="0">The text message has been successfully deleted.</word>
+  <word key="netgsm_new_text_recipients" js="0">Recipients</word>
+  <word key="netgsm_new_text_message" js="0">Message</word>
+  <word key="netgsm_new_text_sent" js="0">The text message has been successfully sent.</word>
+  <word key="netgsm_new_text_sent_empty" js="0">There were no members with saved phone numbers in your last request.</word>
+  <word key="netgsm_registration_profile" js="0">Member Admin Profile</word>
+  <word key="netgsm_registration_verify" js="0">Verify Registration</word>
+  <word key="netgsm_registration_verified" js="0">The registration has been successfully verified.</word>
+  <word key="netgsm_registration_unverify" js="0">Unverify Registration</word>
+  <word key="netgsm_registration_unverified" js="0">The registration has been successfully unverified.</word>
+  <word key="netgsm_registration_delete" js="0">Delete Registration</word>
+  <word key="netgsm_registration_deleted" js="0">The registration has been successfully deleted.</word>
+  <word key="netgsm_system_tab" js="0">System</word>
+  <word key="netgsm_system_header" js="0">NETGSM Settings</word>
+  <word key="netgsm_system_message" js="0">This application supports international phone numbers. In order to properly validate a phone number, the country needs to be specified when saving a phone number. You can set the default country below. A member can always change the country when entering their phone number.</word>
   <word key="netgsm_usercode" js="0">Usercode</word>
   <word key="netgsm_password" js="0">Password</word>
   <word key="netgsm_sender_name" js="0">Sender Name</word>
-  <word key="netgsm_text_message" js="0">Text Message</word>
-  <word key="netgsm_text_message_desc" js="0">The message that will be sent to their phone. The variable {code} will be replace with the actual validation code.</word>
+  <word key="netgsm_rate_limiter_header" js="0">Rate Limiter</word>
+  <word key="netgsm_rate_limiter_message" js="0">Calls to the NETGSM API are limited to prevent fraudlent use and race conditions that could endanger your reputation with the API. You must have configured your community to use Redis via the Data Storage Method setting and have &quot;Use Redis to reduce MySQL overhead&quot; enabled.</word>
+  <word key="netgsm_rate_limiter_per_minute" js="0">Per Minute</word>
+  <word key="netgsm_rate_limiter_per_minute_desc" js="0">How many calls to the API per minute will be allowed?</word>
   <word key="netgsm_default_country_code" js="0">Default Country Code</word>
   <word key="netgsm_default_country_code_desc" js="0">The default selected country code when a member is entering their phone number.</word>
+  <word key="netgsm_registration_tab" js="0">Registration</word>
+  <word key="netgsm_registration_header" js="0">Verification</word>
+  <word key="netgsm_registration_enabled" js="0">Enabled</word>
+  <word key="netgsm_registration_enabled_desc" js="0">Check to enable phone verification when registering. This will replace the default email verification used by Invision Community.</word>
+  <word key="netgsm_registration_text_message" js="0">Text Message</word>
+  <word key="netgsm_registration_text_message_desc" js="0">The message that will be sent to their phone. The variable {code} will be replace with the actual validation code.</word>
+  <word key="netgsm_birthday_tab" js="0">Birthday Text</word>
+  <word key="netgsm_birthday_header" js="0">Automatic Text</word>
+  <word key="netgsm_birthday_enabled" js="0">Enabled</word>
+  <word key="netgsm_birthday_enabled_desc" js="0">Send a text to member's on their birthday.</word>
+  <word key="netgsm_birthday_text_message" js="0">Text Message</word>
+  <word key="netgsm_birthday_text_message_desc" js="0">The message to send to a member on their birthday.</word>
+  <word key="netgsm_password_tab" js="0">Password</word>
+  <word key="netgsm_password_header" js="0">Change Password</word>
+  <word key="netgsm_password_enabled" js="0">Enabled</word>
+  <word key="netgsm_password_enabled_desc" js="0">Force the member to revalidate with their phone number once they change their password from within the User Control Panel.</word>
+  <word key="netgsm_lost_password_enabled" js="0">Enabled</word>
+  <word key="netgsm_lost_password_enabled_desc" js="0">Enable password reset using the phone number attached to a member's account. A text containing a URL to reset their password will be sent to their phone.</word>
+  <word key="netgsm_lost_password_header" js="0">Lost Password</word>
+  <word key="netgsm_lost_password_text_message" js="0">Text Message</word>
+  <word key="netgsm_lost_password_text_message_desc" js="0">The message that will be sent to their phone containing the URL to reset their password. The variable {url} will be replace with the actual URL.</word>
   <word key="netgsm_confirm_phone" js="0">Please confirm your phone number</word>
   <word key="netgsm_confirm_phone_desc" js="0">We will send you a text message with a validation code to the phone number you enter. Standard text messaging rates apply.</word>
   <word key="netgsm_confirm_phone_sent_desc" js="0"><![CDATA[We sent a text message to <strong>%s</strong>. Please enter the code you received using the button below.]]></word>
   <word key="netgsm_phone" js="0">Phone Number</word>
-  <word key="netgsm_phone_desc" js="0">The phone number used with NETGSM.</word>
   <word key="netgsm_verified" js="0">Verified</word>
   <word key="netgsm_phone_country" js="0">Country</word>
   <word key="netgsm_change_phone" js="0">Change Phone Number</word>
@@ -31,7 +80,14 @@
   <word key="netgsm_code" js="0">Code</word>
   <word key="netgsm_code_resent" js="0">The validation code has been resent.</word>
   <word key="netgsm_code_invalid" js="0">The code you entered is not valid. Please try again.</word>
-  <word key="netgsm_code_verified" js="0">You account has been successfully verified.</word>
-  <word key="member__netgsm_PhoneNumber" js="0">NETGSM Phone Number</word>
+  <word key="netgsm_code_verified" js="0">Your account has been successfully verified.</word>
+  <word key="netgsm_phone_number_saved" js="0">Your phone number has been successfully saved.</word>
+  <word key="netgsm_phone_number_must_validate" js="0">You must validate your new phone number.</word>
+  <word key="netgsm_lost_pass_sent" js="0">We've sent a link to your phone to help reset your password.</word>
+  <word key="netgsm_lost_pass_not_found" js="0">We could not find a member associated with that phone number.</word>
+  <word key="member__netgsm_PhoneNumber" js="0">Phone Number</word>
+  <word key="profile_netgsm_PhoneNumber" js="0">Phone Number</word>
+  <word key="profile_netgsm_PhoneNumber_header" js="0">Manage Phone Number</word>
+  <word key="profile_netgsm_PhoneNumber_message" js="0">Manage the phone number you have saved to your profile. You will be sent a text message to verify any changes.</word>
  </app>
 </language>

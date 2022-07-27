@@ -1,0 +1,17 @@
+{
+    "added": [
+        "netgsm_birthday_enabled",
+        "netgsm_birthday_text_message",
+        "netgsm_lost_password_enabled",
+        "netgsm_lost_password_text_message",
+        "netgsm_password_enabled",
+        "netgsm_rate_limiter_per_minute",
+        "netgsm_registration_enabled",
+        "netgsm_registration_text_message"
+    ],
+    "edited": [],
+    "removed": [
+        "netgsm_enabled",
+        "netgsm_text_message"
+    ]
+}

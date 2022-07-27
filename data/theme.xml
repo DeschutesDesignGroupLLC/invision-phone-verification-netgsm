@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <theme name="Default" author_name="Invision Power Services, Inc" author_url="https://www.invisioncommunity.com">
+ <template template_group="settings" template_name="changePhoneNumber" template_data="$form=null" template_location="front" template_app="netgsm"><![CDATA[<div class='ipsAreaBackground_light ipsPadding ipsBorder_bottom'>
+	<h2 class='ipsType_pageTitle'>{lang="netgsm_change_phone"}</h2>
+</div>
+
+<div class='ipsPadding'>
+	{$form|raw}
+</div>]]></template>
  <template template_group="system" template_name="awaitingPhoneValidation" template_data="$sent=false, $phoneNumber = null" template_location="front" template_app="netgsm"><![CDATA[<section class='ipsType_center ipsBox ipsPadding'>
 	<br><br>
 	<i class='ipsType_huge fa fa-phone'></i>
