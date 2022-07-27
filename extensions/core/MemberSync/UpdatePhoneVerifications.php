@@ -153,6 +153,9 @@ class _UpdatePhoneVerifications
 	 */
 	public function onPassChange( $member, $new )
 	{
-
+		if (\IPS\Settings::i()->netgsm_registration_enabled && \IPS\Settings::i()->netgsm_password_enabled) {
+			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
+			$netgsmManager->setMemberAsUnverified($member);
+		}
 	}
 }

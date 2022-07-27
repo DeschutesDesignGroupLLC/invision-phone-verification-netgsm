@@ -68,6 +68,10 @@ $lang = array(
 	'netgsm_birthday_enabled_desc' => 'Send a text to member\'s on their birthday.',
 	'netgsm_birthday_text_message' => 'Text Message',
 	'netgsm_birthday_text_message_desc' => 'The message to send to a member on their birthday.',
+	'netgsm_password_tab' => 'Password',
+	'netgsm_password_header' => 'Validation Required',
+	'netgsm_password_enabled' => 'Enabled',
+	'netgsm_password_enabled_desc' => 'Force the member to revalidate with their phone number once they change their password.',
 
 	// Validation
 	'netgsm_confirm_phone' => 'Please confirm your phone number',

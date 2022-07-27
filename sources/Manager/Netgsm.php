@@ -504,7 +504,9 @@ class _Netgsm
 		\IPS\Db::i()->delete('core_validating', array('member_id=?', $member->member_id));
 		$this->updateVerificationStatus($member, [
 			'verified' => 1,
-			'verified_at' => time()
+			'verified_at' => time(),
+			'code' => null,
+			'code_sent_at' => null
 		]);
 	}
 }

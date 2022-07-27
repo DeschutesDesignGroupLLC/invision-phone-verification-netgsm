@@ -16,6 +16,10 @@
         "default": ""
     },
     {
+        "key": "netgsm_password_enabled",
+        "default": "0"
+    },
+    {
         "key": "netgsm_rate_limiter_per_minute",
         "default": "100"
     },

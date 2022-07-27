@@ -57,11 +57,11 @@ class _registrations extends \IPS\Dispatcher\Controller
 		$table->include = [
 			'id',
 			'member',
-			'code',
-			'code_sent_at',
+			'phone_number',
 			'verified',
 			'verified_at',
-			'phone_number'
+			'code',
+			'code_sent_at'
 		];
 
 		$table->parsers = [

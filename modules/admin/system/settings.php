@@ -73,6 +73,10 @@ class _settings extends \IPS\Dispatcher\Controller
 		$form->add(new \IPS\Helpers\Form\YesNo('netgsm_birthday_enabled', \IPS\Settings::i()->netgsm_birthday_enabled, true));
 		$form->add(new \IPS\Helpers\Form\Text('netgsm_birthday_text_message', \IPS\Settings::i()->netgsm_birthday_text_message, false));
 
+		$form->addTab('netgsm_password_tab');
+		$form->addHeader('netgsm_password_header');
+		$form->add(new \IPS\Helpers\Form\YesNo('netgsm_password_enabled', \IPS\Settings::i()->netgsm_password_enabled, true));
+
 		if ($values = $form->values()) {
 			if ($values['netgsm_usercode']) {
 				$values['netgsm_usercode'] = \IPS\Text\Encrypt::fromPlaintext($values['netgsm_usercode'])->tag();
