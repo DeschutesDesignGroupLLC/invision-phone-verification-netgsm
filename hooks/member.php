@@ -22,7 +22,7 @@ class netgsm_hook_member extends _HOOK_CLASS_
 	    if (\IPS\Settings::i()->netgsm_registration_enabled)
 	    {
 	        $netgsmManager = new \IPS\netgsm\Manager\Netgsm();
-	        $netgsmManager->setMemberAsUnverified($this, $refUrl);
+	        $netgsmManager->setMemberAsUnverified($this, true, false, $refUrl);
         }
 
 	    parent::postRegistration($noEmailValidationRequired, $doNotDelete, $postBeforeRegister, $refUrl);

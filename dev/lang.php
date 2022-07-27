@@ -69,16 +69,20 @@ $lang = array(
 	'netgsm_birthday_text_message' => 'Text Message',
 	'netgsm_birthday_text_message_desc' => 'The message to send to a member on their birthday.',
 	'netgsm_password_tab' => 'Password',
-	'netgsm_password_header' => 'Validation Required',
+	'netgsm_password_header' => 'Change Password',
 	'netgsm_password_enabled' => 'Enabled',
-	'netgsm_password_enabled_desc' => 'Force the member to revalidate with their phone number once they change their password.',
+	'netgsm_password_enabled_desc' => 'Force the member to revalidate with their phone number once they change their password from within the User Control Panel.',
+	'netgsm_lost_password_enabled' => 'Enabled',
+	'netgsm_lost_password_enabled_desc' => 'Enable password reset using the phone number attached to a member\'s account. A text containing a URL to reset their password will be sent to their phone.',
+	'netgsm_lost_password_header' => 'Lost Password',
+	'netgsm_lost_password_text_message' => 'Text Message',
+	'netgsm_lost_password_text_message_desc' => 'The message that will be sent to their phone containing the URL to reset their password. The variable {url} will be replace with the actual URL.',
 
 	// Validation
 	'netgsm_confirm_phone' => 'Please confirm your phone number',
 	'netgsm_confirm_phone_desc' => 'We will send you a text message with a validation code to the phone number you enter. Standard text messaging rates apply.',
 	'netgsm_confirm_phone_sent_desc' => 'We sent a text message to <strong>%s</strong>. Please enter the code you received using the button below.',
 	'netgsm_phone' => 'Phone Number',
-	'netgsm_phone_desc' => 'The phone number used with NETGSM.',
 	'netgsm_verified' => 'Verified',
 	'netgsm_phone_country' => 'Country',
 	'netgsm_change_phone' => 'Change Phone Number',
@@ -91,6 +95,8 @@ $lang = array(
 	'netgsm_code_verified' => 'Your account has been successfully verified.',
 	'netgsm_phone_number_saved' => 'Your phone number has been successfully saved.',
 	'netgsm_phone_number_must_validate' => 'You must validate your new phone number.',
+	'netgsm_lost_pass_sent' => 'We\'ve sent a link to your phone to help reset your password.',
+	'netgsm_lost_pass_not_found' => 'We could not find a member associated with that phone number.',
 
 	// Extensions
 	'member__netgsm_PhoneNumber' => 'Phone Number',

@@ -40,7 +40,8 @@ class _PhoneNumber
 	public function save( $values, &$member )
 	{
 		$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
-		$validatedPhoneNumber = $netgsmManager->validatePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']);
+		$parsedPhoneNumber = $netgsmManager->parsePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']);
+		$netgsmManager->validatePhoneNumber($parsedPhoneNumber);
 
 		$verified = $member->phone_number_verified;
 
@@ -52,7 +53,7 @@ class _PhoneNumber
 		}
 
 		$netgsmManager->updateVerificationStatus($member, [
-			'phone_number' => $netgsmManager->formatPhoneNumber($validatedPhoneNumber)
+			'phone_number' => $netgsmManager->formatPhoneNumber($parsedPhoneNumber)
 		]);
 	}
 }

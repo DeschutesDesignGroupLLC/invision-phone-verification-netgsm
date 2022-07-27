@@ -41,7 +41,9 @@ class _register extends \IPS\Dispatcher\Controller
 		if ($values = $form->values())
 		{
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
-			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($netgsmManager->validatePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']));
+			$parsedPhoneNumber = $netgsmManager->parsePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']);
+			$netgsmManager->validatePhoneNumber($parsedPhoneNumber);
+			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($parsedPhoneNumber);
 			$code = $netgsmManager->generateRandomCode();
 			$netgsmManager->sendSms($formattedPhoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
 			$netgsmManager->updateVerificationStatus(\IPS\Member::loggedIn(), [
@@ -72,8 +74,7 @@ class _register extends \IPS\Dispatcher\Controller
 			}
 		}));
 
-		if ($values = $form->values())
-		{
+		if ($values = $form->values()) {
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
 			$netgsmManager->setMemberAsVerified(\IPS\Member::loggedIn());
 

@@ -14,5 +14,9 @@
     "phone": {
         "type": "C",
         "class": "\\IPS\\core\\modules\\front\\system\\settings"
+    },
+    "lostpass": {
+        "type": "C",
+        "class": "\\IPS\\core\\modules\\front\\system\\lostpass"
     }
 }

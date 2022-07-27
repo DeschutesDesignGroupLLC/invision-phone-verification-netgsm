@@ -23,10 +23,11 @@ class netgsm_hook_phone extends _HOOK_CLASS_
 		]));
 		$form->add(new \IPS\Helpers\Form\Tel('netgsm_phone', \IPS\Member::loggedIn()->phone_number, true));
 
-		if ($values = $form->values())
-		{
+		if ($values = $form->values()) {
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
-			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($netgsmManager->validatePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']));
+			$parsedPhoneNumber = $netgsmManager->parsePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']);
+			$netgsmManager->validatePhoneNumber($parsedPhoneNumber);
+			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($parsedPhoneNumber);
 			if ($formattedPhoneNumber !== \IPS\Member::loggedIn()->phone_number) {
 
 				$code = $netgsmManager->generateRandomCode();
@@ -44,6 +45,6 @@ class netgsm_hook_phone extends _HOOK_CLASS_
 			\IPS\Output::i()->redirect(\IPS\Http\Url::internal(''), 'netgsm_phone_number_saved');
 		}
 
-		return \IPS\Theme::i()->getTemplate('settings', 'netgsm', 'front')->changePhoneNumber( $form );
+		return \IPS\Theme::i()->getTemplate('settings', 'netgsm', 'front')->changePhoneNumber($form);
 	}
 }

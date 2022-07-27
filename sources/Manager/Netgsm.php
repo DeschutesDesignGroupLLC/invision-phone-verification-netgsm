@@ -2,15 +2,14 @@
 
 namespace IPS\netgsm\Manager;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use RateLimit\Exception\LimitExceeded;
 use RateLimit\Rate;
 use RateLimit\RedisRateLimiter;
-use Redis;
 
 class _Netgsm
 {
@@ -414,7 +413,27 @@ class _Netgsm
 		if (Str::contains($message, '{code}')) {
 			return Str::replace('{code}', $code, $message);
 		}
-		return $code;
+		return $message;
+	}
+
+	/**
+	 * @param $member
+	 * @param $vid
+	 *
+	 * @return mixed|string
+	 */
+	public function composeLostPasswordTextMessage($member, $vid)
+	{
+		$url = \IPS\Http\Url::internal('app=core&module=system&controller=lostpass&do=validate')->setQueryString([
+			'vid' => $vid,
+			'mid' => $member instanceof \IPS\Member ? $member->member_id : $member
+		])->__toString();
+
+		$message = \IPS\Settings::i()->netgsm_lost_password_text_message;
+		if (Str::contains($message, '{url}')) {
+			return Str::replace('{url}', $url, $message);
+		}
+		return $message;
 	}
 
 	/**
@@ -427,45 +446,69 @@ class _Netgsm
 	}
 
 	/**
-	 * @param        $phoneNumber
-	 * @param  null  $countryCode
+	 * @param $phoneNumber
 	 *
-	 * @return false|PhoneNumber|null
+	 * @return bool
 	 */
-	public function validatePhoneNumber($phoneNumber, $countryCode = null)
+	public function validatePhoneNumber($phoneNumber): bool
 	{
-		try {
-			$phoneUtil = PhoneNumberUtil::getInstance();
-			$phoneNumberProto = $phoneUtil->parse($phoneNumber, $countryCode ?? \IPS\Settings::i()->netgsm_default_country_code, null, true);
-			$valid = $phoneUtil->isValidNumber($phoneNumberProto);
+		$phoneUtil = PhoneNumberUtil::getInstance();
+		if (!$phoneNumber instanceof PhoneNumber) {
+			$phoneNumber = $this->parsePhoneNumber($phoneNumber);
+		}
 
-			return $valid ? $phoneNumberProto : false;
-		} catch (\libphonenumber\NumberParseException $e) {
+		if (!$phoneUtil->isValidNumber($phoneNumber)) {
 			throw new \DomainException('The phone number you entered is not valid. Please try again.');
 		}
+
+		return true;
 	}
 
 	/**
-	 * @param $phoneNumber
+	 * @param       $phoneNumber
+	 * @param  int  $format
 	 *
 	 * @return string
-	 * @throws \libphonenumber\NumberParseException
 	 */
 	public function formatPhoneNumber($phoneNumber, int $format = PhoneNumberFormat::E164): string
 	{
 		$phoneUtil = PhoneNumberUtil::getInstance();
 		if (!$phoneNumber instanceof PhoneNumber) {
-			$phoneNumber = $phoneUtil->parse($phoneNumber);
+			$phoneNumber = $this->parsePhoneNumber($phoneNumber);
 		}
 
-		return PhoneNumberUtil::getInstance()->format($phoneNumber, $format);
+		return $phoneUtil->format($phoneNumber, $format);
+	}
+
+	/**
+	 * @param        $phoneNumber
+	 * @param  null  $countryCode
+	 *
+	 * @return PhoneNumber|null
+	 */
+	public function parsePhoneNumber($phoneNumber, $countryCode = null): ?PhoneNumber
+	{
+		try {
+			return PhoneNumberUtil::getInstance()->parse(
+				$phoneNumber,
+				$countryCode ?? \IPS\Settings::i()->netgsm_default_country_code,
+				$phoneNumber instanceof PhoneNumber ? $phoneNumber : null,
+				true
+			);
+		} catch (NumberParseException) {
+			throw new \DomainException('The phone number you entered is not valid. Please try again.');
+		}
 	}
 
 	/**
 	 * @param        $member
+	 * @param  bool  $newRegistration
+	 * @param  bool  $lostPassword
 	 * @param  null  $refUrl
+	 *
+	 * @return string
 	 */
-	public function setMemberAsUnverified($member, $refUrl = null): void
+	public function setMemberAsUnverified($member, bool $newRegistration = true, bool $lostPassword = false, $refUrl = null): string
 	{
 		$member->members_bitoptions['validating'] = true;
 		$member->save();
@@ -483,7 +526,8 @@ class _Netgsm
 			'vid'		   	=> $vid,
 			'member_id'	 	=> $member->member_id,
 			'entry_date'	=> time(),
-			'new_reg'	   	=> 1,
+			'lost_pass'     => $lostPassword,
+			'new_reg'	   	=> $newRegistration,
 			'ip_address'	=> $member->ip_address,
 			'spam_flag'	 	=> ($member->members_bitoptions['bw_is_spammer']) ?: false,
 			'user_verified'  => false,
@@ -491,6 +535,8 @@ class _Netgsm
 			'do_not_delete'	=> false,
 			'ref'			=> $refUrl ? ( (string) $refUrl ) : NULL
 		));
+
+		return $vid;
 	}
 
 	/**
