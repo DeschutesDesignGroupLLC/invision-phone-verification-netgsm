@@ -26,12 +26,7 @@ class netgsm_hook_phone extends _HOOK_CLASS_
 		if ($values = $form->values())
 		{
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
-			$validatedPhoneNumber = $netgsmManager->validatePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']);
-			if (!$validatedPhoneNumber) {
-				throw new \DomainException('The phone number you entered is not valid. Please try again.');
-			}
-
-			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($validatedPhoneNumber);
+			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($netgsmManager->validatePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']));
 			if ($formattedPhoneNumber !== \IPS\Member::loggedIn()->phone_number) {
 
 				$code = $netgsmManager->generateRandomCode();

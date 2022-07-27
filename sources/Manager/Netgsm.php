@@ -430,7 +430,7 @@ class _Netgsm
 	 * @param        $phoneNumber
 	 * @param  null  $countryCode
 	 *
-	 * @return false|\libphonenumber\PhoneNumber|null
+	 * @return false|PhoneNumber|null
 	 */
 	public function validatePhoneNumber($phoneNumber, $countryCode = null)
 	{
@@ -441,7 +441,7 @@ class _Netgsm
 
 			return $valid ? $phoneNumberProto : false;
 		} catch (\libphonenumber\NumberParseException $e) {
-			return false;
+			throw new \DomainException('The phone number you entered is not valid. Please try again.');
 		}
 	}
 

@@ -41,13 +41,8 @@ class _register extends \IPS\Dispatcher\Controller
 		if ($values = $form->values())
 		{
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
-			$validatedPhoneNumber = $netgsmManager->validatePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']);
-			if (!$validatedPhoneNumber) {
-				throw new \DomainException('The phone number you entered is not valid. Please try again.');
-			}
-
+			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($netgsmManager->validatePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']));
 			$code = $netgsmManager->generateRandomCode();
-			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($validatedPhoneNumber);
 			$netgsmManager->sendSms($formattedPhoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
 			$netgsmManager->updateVerificationStatus(\IPS\Member::loggedIn(), [
 				'code' => $code,

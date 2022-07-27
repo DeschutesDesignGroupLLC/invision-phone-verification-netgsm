@@ -41,9 +41,6 @@ class _PhoneNumber
 	{
 		$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
 		$validatedPhoneNumber = $netgsmManager->validatePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']);
-		if (!$validatedPhoneNumber) {
-			throw new \DomainException('The phone number you entered is not valid. Please try again.');
-		}
 
 		$verified = $member->phone_number_verified;
 

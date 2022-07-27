@@ -59,7 +59,7 @@ class _messages extends \IPS\Dispatcher\Controller
 				return $value ? \IPS\DateTime::ts($value)->html() : null;
 			},
 			'phone_number' => function ($value) {
-				return (new \IPS\netgsm\Manager\Netgsm())->formatPhoneNumber($value, PhoneNumberFormat::INTERNATIONAL);
+				return $value ? (new \IPS\netgsm\Manager\Netgsm())->formatPhoneNumber($value, PhoneNumberFormat::INTERNATIONAL) : null;
 			},
 		];
 

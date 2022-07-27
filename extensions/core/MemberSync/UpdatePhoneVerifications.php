@@ -122,6 +122,10 @@ class _UpdatePhoneVerifications
 	 */
 	public function onDelete( $member )
 	{
+		\IPS\Db::i()->delete('netgsm_messages', [
+			'phone_number=?', $member->phone_number
+		]);
+
 		\IPS\Db::i()->delete('netgsm_verifications', [
 			'member_id=?', $member->member_id
 		]);
