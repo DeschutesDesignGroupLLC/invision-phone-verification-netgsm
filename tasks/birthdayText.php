@@ -36,7 +36,7 @@ class _birthdayText extends \IPS\Task
 	 */
 	public function execute()
 	{
-		if (\IPS\Settings::i()->netgsm_birthday_enabled && $textMessage = \IPS\Settings::i()->netgsm_birthday_text_message) {
+		if (\IPS\Settings::i()->netgsm_registration_enabled && \IPS\Settings::i()->netgsm_birthday_enabled && $textMessage = \IPS\Settings::i()->netgsm_birthday_text_message) {
 
 			$todaysMonth = date('m');
 			$todaysDay = date('d');

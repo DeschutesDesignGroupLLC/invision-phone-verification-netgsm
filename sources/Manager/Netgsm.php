@@ -315,7 +315,7 @@ class _Netgsm
 	 */
 	public function sendSms($phoneNumber, $message)
 	{
-		$phoneNumbers = collect($phoneNumber)->unique()->map(function ($phoneNumber) {
+		$phoneNumbers = collect($phoneNumber)->map(function ($phoneNumber) {
 			return $this->formatPhoneNumber($phoneNumber);
 		})->unique()->each(function ($phoneNumber) use ($message) {
 			$this->checkRateLimiter($phoneNumber);

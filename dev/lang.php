@@ -84,7 +84,9 @@ $lang = array(
 	'netgsm_code' => 'Code',
 	'netgsm_code_resent' => 'The validation code has been resent.',
 	'netgsm_code_invalid' => 'The code you entered is not valid. Please try again.',
-	'netgsm_code_verified' => 'You account has been successfully verified.',
+	'netgsm_code_verified' => 'Your account has been successfully verified.',
+	'netgsm_phone_number_saved' => 'Your phone number has been successfully saved.',
+	'netgsm_phone_number_must_validate' => 'You must validate your new phone number.',
 
 	// Extensions
 	'member__netgsm_PhoneNumber' => 'Phone Number',
