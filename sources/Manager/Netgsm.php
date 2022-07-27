@@ -2,9 +2,14 @@
 
 namespace IPS\netgsm\Manager;
 
+use Illuminate\Support\Str;
 use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
+use RateLimit\Exception\LimitExceeded;
+use RateLimit\Rate;
+use RateLimit\RedisRateLimiter;
+use Redis;
 
 class _Netgsm
 {
@@ -308,6 +313,13 @@ class _Netgsm
 	 */
 	public function sendSms($phoneNumber, $message)
 	{
+		if (\IPS\REDIS_ENABLED && \IPS\STORE_METHOD === 'Redis') {
+			$perMinute = \IPS\Settings::i()->netgsm_rate_limiter_per_minute ?? 100;
+
+			$rateLimiter = new RedisRateLimiter(Rate::perMinute($perMinute), \IPS\Redis::i()->connection());
+			$rateLimiter->limit($phoneNumber);
+		}
+
 		return \IPS\Http\Url::external('https://api.netgsm.com.tr/sms/send/get')->setQueryString([
 			'usercode' => $this->usercode,
 			'password' => $this->password,
@@ -365,11 +377,11 @@ class _Netgsm
 	 *
 	 * @return array|mixed|string|string[]
 	 */
-	public function composeTextMessage($code)
+	public function composeCodeValidationTextMessage($code)
 	{
 		$message = \IPS\Settings::i()->netgsm_registration_text_message;
-		if (str_contains($message, '{code}')) {
-			return str_replace('{code}', $code, $message);
+		if (Str::contains($message, '{code}')) {
+			return Str::replace('{code}', $code, $message);
 		}
 		return $code;
 	}

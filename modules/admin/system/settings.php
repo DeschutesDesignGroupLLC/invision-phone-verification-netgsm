@@ -54,6 +54,10 @@ class _settings extends \IPS\Dispatcher\Controller
 			'options' => \IPS\netgsm\Manager\Netgsm::$countryCodes
 		]));
 
+		$form->addHeader('netgsm_rate_limiter_header');
+		$form->addMessage('netgsm_rate_limiter_message');
+		$form->add(new \IPS\Helpers\Form\Number('netgsm_rate_limiter_per_minute', \IPS\Settings::i()->netgsm_rate_limiter_per_minute, true));
+
 		$form->addTab('netgsm_registration_tab');
 		$form->addHeader('netgsm_registration_header');
 		$form->add(new \IPS\Helpers\Form\YesNo('netgsm_registration_enabled', \IPS\Settings::i()->netgsm_registration_enabled, true));

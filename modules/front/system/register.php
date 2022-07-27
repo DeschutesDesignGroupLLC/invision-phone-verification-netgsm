@@ -48,7 +48,7 @@ class _register extends \IPS\Dispatcher\Controller
 
 			$code = $netgsmManager->generateRandomCode();
 			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($validatedPhoneNumber);
-			$netgsmManager->sendSms($formattedPhoneNumber, $netgsmManager->composeTextMessage($code));
+			$netgsmManager->sendSms($formattedPhoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
 			$netgsmManager->updateVerificationStatus(\IPS\Member::loggedIn(), [
 				'code' => $code,
 				'code_sent_at' => time(),
@@ -98,7 +98,7 @@ class _register extends \IPS\Dispatcher\Controller
 		if ($phoneNumber = \IPS\Member::loggedIn()->phone_number) {
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
 			$code = $netgsmManager->generateRandomCode();
-			$response = $netgsmManager->sendSms($phoneNumber, $netgsmManager->composeTextMessage($code));
+			$response = $netgsmManager->sendSms($phoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
 			$netgsmManager->updateVerificationStatus(\IPS\Member::loggedIn(), [
 				'code' => $code,
 				'code_sent_at' => time()

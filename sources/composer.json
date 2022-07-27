@@ -1,5 +1,7 @@
 {
     "require": {
-        "giggsey/libphonenumber-for-php": "^8.12"
+        "giggsey/libphonenumber-for-php": "^8.12",
+        "nikolaposa/rate-limit": "^3.0",
+        "illuminate/support": "^9.22"
     }
 }
