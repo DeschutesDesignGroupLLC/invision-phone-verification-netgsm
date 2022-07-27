@@ -5,6 +5,9 @@
         },
         "registrations": {
             "registrations_manage": "registrations_manage"
+        },
+        "messages": {
+            "messages_manage": "messages_manage"
         }
     }
 }

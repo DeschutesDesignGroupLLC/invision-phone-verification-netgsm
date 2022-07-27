@@ -2,6 +2,7 @@
 
 namespace IPS\netgsm\Manager;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
@@ -306,12 +307,36 @@ class _Netgsm
 	}
 
 	/**
-	 * @param $phoneNumber
-	 * @param $message
+	 * @param string|PhoneNumber                $phoneNumber
+	 * @param string|\IPS\netgsm\Phone\Message  $message
 	 *
+	 * @throws LimitExceeded|
 	 * @return mixed
 	 */
 	public function sendSms($phoneNumber, $message)
+	{
+		$phoneNumbers = collect($phoneNumber)->unique()->map(function ($phoneNumber) {
+			return $this->formatPhoneNumber($phoneNumber);
+		})->unique()->each(function ($phoneNumber) use ($message) {
+			$this->checkRateLimiter($phoneNumber);
+			$this->addMessageLog($phoneNumber, $message);
+		});
+
+		if ($phoneNumbers->isNotEmpty()) {
+			return \IPS\Http\Url::external('https://api.netgsm.com.tr/sms/send/get')->setQueryString([
+				'usercode' => $this->usercode,
+				'password' => $this->password,
+				'msgheader' => $this->senderName,
+				'gsmno' => implode(',', $phoneNumbers->toArray()),
+				'message' => $message instanceof \IPS\netgsm\Phone\Message ? $message->message : $message
+			])->request()->post();
+		}
+	}
+
+	/**
+	 * @param $phoneNumber
+	 */
+	protected function checkRateLimiter($phoneNumber): void
 	{
 		if (\IPS\REDIS_ENABLED && \IPS\STORE_METHOD === 'Redis') {
 			$perMinute = \IPS\Settings::i()->netgsm_rate_limiter_per_minute ?? 100;
@@ -319,14 +344,19 @@ class _Netgsm
 			$rateLimiter = new RedisRateLimiter(Rate::perMinute($perMinute), \IPS\Redis::i()->connection());
 			$rateLimiter->limit($phoneNumber);
 		}
+	}
 
-		return \IPS\Http\Url::external('https://api.netgsm.com.tr/sms/send/get')->setQueryString([
-			'usercode' => $this->usercode,
-			'password' => $this->password,
-			'msgheader' => $this->senderName,
-			'gsmno' => $phoneNumber,
-			'message' => $message
-		])->request()->post();
+	/**
+	 * @param $phoneNumber
+	 * @param $message
+	 */
+	protected function addMessageLog($phoneNumber, $message)
+	{
+		\IPS\Db::i()->insert('netgsm_messages', [
+			'phone_number' => $phoneNumber,
+			'message' => $message,
+			'message_sent_at' => time()
+		]);
 	}
 
 	/**
@@ -355,22 +385,11 @@ class _Netgsm
 
 	/**
 	 * @param $member
-	 */
-	public function deleteVerification($member)
-	{
-		$id = $member instanceof \IPS\Member ? $member->member_id : $member;
-		\IPS\Db::i()->delete('netgsm_verifications', [
-			'member_id=?', $id
-		]);
-	}
-
-	/**
-	 * @param $member
 	 * @param $code
 	 *
 	 * @return bool
 	 */
-	public function confirmCode($member, $code)
+	public function confirmCode($member, $code): bool
 	{
 		try {
 			\IPS\Db::i()->select('*', 'netgsm_verifications', [
@@ -402,7 +421,7 @@ class _Netgsm
 	 * @return int
 	 * @throws \Exception
 	 */
-	public function generateRandomCode()
+	public function generateRandomCode(): int
 	{
 		return random_int(100000, 999999);
 	}
@@ -432,7 +451,7 @@ class _Netgsm
 	 * @return string
 	 * @throws \libphonenumber\NumberParseException
 	 */
-	public function formatPhoneNumber($phoneNumber, int $format = PhoneNumberFormat::E164)
+	public function formatPhoneNumber($phoneNumber, int $format = PhoneNumberFormat::E164): string
 	{
 		$phoneUtil = PhoneNumberUtil::getInstance();
 		if (!$phoneNumber instanceof PhoneNumber) {
@@ -446,7 +465,7 @@ class _Netgsm
 	 * @param        $member
 	 * @param  null  $refUrl
 	 */
-	public function setMemberAsUnverified($member, $refUrl = null)
+	public function setMemberAsUnverified($member, $refUrl = null): void
 	{
 		$member->members_bitoptions['validating'] = true;
 		$member->save();
@@ -477,7 +496,7 @@ class _Netgsm
 	/**
 	 * @param $member
 	 */
-	public function setMemberAsVerified($member)
+	public function setMemberAsVerified($member): void
 	{
 		$member->members_bitoptions['validating'] = false;
 		$member->save();

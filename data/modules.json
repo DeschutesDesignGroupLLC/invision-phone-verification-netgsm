@@ -1,7 +1,7 @@
 {
     "admin": {
         "system": {
-            "default_controller": "",
+            "default_controller": "registrations",
             "protected": 0,
             "default": 1
         }

@@ -1,5 +1,12 @@
 {
     "system": {
+        "messages": {
+            "tab": "netgsm",
+            "controller": "messages",
+            "do": "",
+            "restriction": "messages_manage",
+            "subcontrollers": ""
+        },
         "registrations": {
             "tab": "netgsm",
             "controller": "registrations",

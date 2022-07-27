@@ -7,6 +7,7 @@ $lang = array(
     'menutab__netgsm' => 'NETGSM',
     'menutab__netgsm_icon' => 'phone',
 	'menu__netgsm_system' => 'System',
+	'menu__netgsm_system_messages' => 'Messages',
 	'menu__netgsm_system_registrations' => 'Registrations',
 	'menu__netgsm_system_settings' => 'Settings',
 
@@ -16,6 +17,22 @@ $lang = array(
 	'verified' => 'Verified',
 	'verified_at' => 'Verified At',
 	'phone_number' => 'Phone Number',
+	'message' => 'Message',
+	'message_desc' => 'A message will only be sent to those with a phone number on file that is verified.',
+	'message_sent_at' => 'Message Sent At',
+	'recipient_ids' => 'Recipients',
+	'recipient_ids_desc' => 'Leaving blank will send a message to all members.',
+
+	// Messages Controller
+	'netgsm_messages_new' => 'New Message',
+	'netgsm_messages_delete' => 'Delete Message',
+	'netgsm_messages_send' => 'Send Message',
+	'netgsm_messages_send_all_members' => 'Send Message to All Members',
+	'netgsm_messages_deleted' => 'The text message has been successfully deleted.',
+	'netgsm_new_text_recipients' => 'Recipients',
+	'netgsm_new_text_message' => 'Message',
+	'netgsm_new_text_sent' => 'The text message has been successfully sent.',
+	'netgsm_new_text_sent_empty' => 'There were no members with saved phone numbers in your last request.',
 
 	// Registration Controller
 	'netgsm_registration_profile' => 'Member Admin Profile',

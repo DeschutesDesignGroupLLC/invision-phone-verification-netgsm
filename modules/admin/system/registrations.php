@@ -43,7 +43,7 @@ class _registrations extends \IPS\Dispatcher\Controller
 	{
 		$table = new \IPS\Helpers\Table\Db('netgsm_verifications', \IPS\Http\Url::internal( 'app=netgsm&module=system&controller=registrations'));
 		$table->sortBy = $table->sortBy ?: 'verified_at';
-		$table->sortDirection = $table->sortDirection ?: 'asc';
+		$table->sortDirection = $table->sortDirection ?: 'desc';
 		$table->quickSearch = [['code', 'verified'], 'registration'];
 
 		$table->joins = [
@@ -106,7 +106,7 @@ class _registrations extends \IPS\Dispatcher\Controller
 				'delete' => [
 					'icon' => 'times-circle',
 					'title' => 'netgsm_registration_delete',
-					'link' => \IPS\Http\Url::internal('app=netgsm&module=system&controller=registrations&do=delete')->setQueryString(['id' => $row['member_id']])
+					'link' => \IPS\Http\Url::internal('app=netgsm&module=system&controller=registrations&do=delete')->setQueryString(['id' => $row['id']])
 				]
 			];
 		};
@@ -149,8 +149,8 @@ class _registrations extends \IPS\Dispatcher\Controller
 		if (\IPS\Request::i()->id) {
 			\IPS\Request::i()->confirmedDelete();
 
-			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
-			$netgsmManager->deleteVerification(\IPS\Request::i()->id);
+			$registration = \IPS\netgsm\Phone\Registration::load(\IPS\Request::i()->id);
+			$registration->delete();
 
 			\IPS\Output::i()->redirect(\IPS\Http\Url::internal('app=netgsm&module=system&controller=registrations', 'admin'), 'netgsm_registration_deleted');
 		}
