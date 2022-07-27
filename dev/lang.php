@@ -7,9 +7,24 @@ $lang = array(
     'menutab__netgsm' => 'NETGSM',
     'menutab__netgsm_icon' => 'phone',
 	'menu__netgsm_system' => 'System',
+	'menu__netgsm_system_registrations' => 'Registrations',
 	'menu__netgsm_system_settings' => 'Settings',
 
-	// System Module
+	// Database Columns
+	'code' => 'Code',
+	'code_sent_at' => 'Code Sent At',
+	'verified' => 'Verified',
+	'verified_at' => 'Verified At',
+	'phone_number' => 'Phone Number',
+
+	// Registration Controller
+	'netgsm_registration_profile' => 'Member Admin Profile',
+	'netgsm_registration_verify' => 'Verify Registration',
+	'netgsm_registration_verified' => 'The registration has been successfully verified.',
+	'netgsm_registration_unverify' => 'Unverify Registration',
+	'netgsm_registration_unverified' => 'The registration has been successfully unverified.',
+	'netgsm_registration_delete' => 'Delete Registration',
+	'netgsm_registration_deleted' => 'The registration has been successfully deleted.',
 
 	// Settings Controller
 	'netgsm_system_tab' => 'System',
@@ -19,7 +34,7 @@ $lang = array(
 	'netgsm_password' => 'Password',
 	'netgsm_sender_name' => 'Sender Name',
 	'netgsm_rate_limiter_header' => 'Rate Limiter',
-	'netgsm_rate_limiter_message' => 'Calls to the NETGSM API are limited to prevent fraudlent use and race conditions that could endanger your reputation with the API.',
+	'netgsm_rate_limiter_message' => 'Calls to the NETGSM API are limited to prevent fraudlent use and race conditions that could endanger your reputation with the API. You must have configured your community to use Redis via the Data Storage Method setting and have "Use Redis to reduce MySQL overhead" enabled.',
 	'netgsm_rate_limiter_per_minute' => 'Per Minute',
 	'netgsm_rate_limiter_per_minute_desc' => 'How many calls to the API per minute will be allowed?',
 	'netgsm_default_country_code' => 'Default Country Code',

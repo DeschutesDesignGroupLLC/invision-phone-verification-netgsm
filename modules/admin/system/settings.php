@@ -15,6 +15,11 @@ if ( !\defined( '\IPS\SUITE_UNIQUE_KEY' ) )
 class _settings extends \IPS\Dispatcher\Controller
 {
 	/**
+	 * @brief Has been CSRF-protected
+	 */
+	public static $csrfProtected = true;
+
+	/**
 	 * Execute
 	 *
 	 * @return	void
@@ -79,7 +84,7 @@ class _settings extends \IPS\Dispatcher\Controller
 			$form->saveAsSettings($values);
 		}
 
-		\IPS\Output::i()->title = \IPS\Member::loggedIn()->language()->addToStack('settings');
+		\IPS\Output::i()->title = \IPS\Member::loggedIn()->language()->addToStack('menu__netgsm_system_settings');
 		\IPS\Output::i()->output = $form;
 	}
 }

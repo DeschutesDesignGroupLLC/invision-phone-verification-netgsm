@@ -1,5 +1,12 @@
 {
     "system": {
+        "registrations": {
+            "tab": "netgsm",
+            "controller": "registrations",
+            "do": "",
+            "restriction": "registrations_manage",
+            "subcontrollers": ""
+        },
         "settings": {
             "tab": "netgsm",
             "controller": "settings",

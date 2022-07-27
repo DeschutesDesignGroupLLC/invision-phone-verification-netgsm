@@ -337,19 +337,31 @@ class _Netgsm
 	 */
 	public function updateVerificationStatus($member, array $update = array())
 	{
+		$id = $member instanceof \IPS\Member ? $member->member_id : $member;
 		try {
 			$previousEntry = \IPS\Db::i()->select('*', 'netgsm_verifications', [
-				'member_id=?', $member->member_id
+				'member_id=?', $id
 			])->first();
 
 			return \IPS\Db::i()->update('netgsm_verifications', $update, [
-				'member_id=?', $member->member_id
+				'member_id=?', $id
 			]);
 		} catch ( \UnderflowException $exception) {}
 
 		return \IPS\Db::i()->insert('netgsm_verifications', array_merge([
-			'member_id' => $member->member_id
+			'member_id' => $id
 		], $update));
+	}
+
+	/**
+	 * @param $member
+	 */
+	public function deleteVerification($member)
+	{
+		$id = $member instanceof \IPS\Member ? $member->member_id : $member;
+		\IPS\Db::i()->delete('netgsm_verifications', [
+			'member_id=?', $id
+		]);
 	}
 
 	/**
@@ -415,13 +427,19 @@ class _Netgsm
 	}
 
 	/**
-	 * @param  PhoneNumber  $phoneNumber
+	 * @param $phoneNumber
 	 *
 	 * @return string
+	 * @throws \libphonenumber\NumberParseException
 	 */
-	public function formatPhoneNumber(PhoneNumber $phoneNumber)
+	public function formatPhoneNumber($phoneNumber, int $format = PhoneNumberFormat::E164)
 	{
-		return PhoneNumberUtil::getInstance()->format($phoneNumber, PhoneNumberFormat::E164);
+		$phoneUtil = PhoneNumberUtil::getInstance();
+		if (!$phoneNumber instanceof PhoneNumber) {
+			$phoneNumber = $phoneUtil->parse($phoneNumber);
+		}
+
+		return PhoneNumberUtil::getInstance()->format($phoneNumber, $format);
 	}
 
 	/**

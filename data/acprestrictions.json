@@ -2,6 +2,9 @@
     "system": {
         "settings": {
             "settings_manage": "settings_manage"
+        },
+        "registrations": {
+            "registrations_manage": "registrations_manage"
         }
     }
 }
