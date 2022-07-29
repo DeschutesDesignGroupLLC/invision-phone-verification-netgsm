@@ -15,7 +15,9 @@ class netgsm_hook_lostpass extends _HOOK_CLASS_
 	 */
 	protected function manage()
 	{
-	    if (!\IPS\Settings::i()->netgsm_lost_password_enabled && \IPS\Settings::i()->netgsm_registration_enabled) {
+	    if (\IPS\Request::i()->use === 'email' ||
+		    !\IPS\Settings::i()->netgsm_registration_enabled ||
+            (!\IPS\Settings::i()->netgsm_lost_password_enabled && \IPS\Settings::i()->netgsm_registration_enabled)) {
 	        return parent::manage();
         }
 
@@ -52,6 +54,6 @@ class netgsm_hook_lostpass extends _HOOK_CLASS_
 		\IPS\Output::i()->title = \IPS\Member::loggedIn()->language()->addToStack('lost_password');
 		\IPS\Output::i()->sidebar['enabled'] = FALSE;
 		\IPS\Output::i()->bodyClasses[] = 'ipsLayout_minimal';
-		\IPS\Output::i()->output = \IPS\Theme::i()->getTemplate( 'system' )->lostPass( $form );
+		\IPS\Output::i()->output = \IPS\Theme::i()->getTemplate('system', 'netgsm', 'front')->lostPass($form);
 	}
 }

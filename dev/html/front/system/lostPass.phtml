@@ -1,0 +1,13 @@
+<ips:template parameters="$form" />
+{{if !request.isAjax()}}
+	{template="pageHeader" group="global" params="\IPS\Member::loggedIn()->language()->addToStack('lost_password')"}
+{{endif}}
+<div class='ipsBox ipsPadding'>
+	{$form|raw}
+	<hr class="ipsHr" />
+	<div class="ipsSpacer_top">
+    <a href='{url="app=core&module=system&controller=lostpass&use=email" seoTemplate="lostpassword" base="front"}' class="ipsType_neutral">
+    	Or reset your password using your email
+    </a>
+	</div>
+</div>
