@@ -1,0 +1,27 @@
+[
+    {
+        "method": "renameTable",
+        "params": [
+            "netgsm_verifications",
+            "netgsm_registrations"
+        ]
+    },
+    {
+        "method": "addColumn",
+        "params": [
+            "netgsm_registrations",
+            {
+                "name": "country_code",
+                "type": "TINYTEXT",
+                "length": null,
+                "decimals": null,
+                "values": null,
+                "allow_null": true,
+                "default": null,
+                "comment": "",
+                "unsigned": false,
+                "auto_increment": false
+            }
+        ]
+    }
+]

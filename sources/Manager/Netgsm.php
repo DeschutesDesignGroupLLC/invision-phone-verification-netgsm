@@ -425,7 +425,7 @@ class _Netgsm
 	 */
 	public function composeLostPasswordTextMessage($member, $vid)
 	{
-		$url = \IPS\Http\Url::internal('app=core&module=system&controller=lostpass&do=validate')->setQueryString([
+		$url = \IPS\Http\Url::internal('app=core&module=system&controller=lostpass&do=validate', 'front', 'lostpassword')->setQueryString([
 			'vid' => $vid,
 			'mid' => $member instanceof \IPS\Member ? $member->member_id : $member
 		])->__toString();

@@ -45,6 +45,9 @@ class _messages extends \IPS\Dispatcher\Controller
 		$table->sortBy = $table->sortBy ?: 'message_sent_at';
 		$table->sortDirection = $table->sortDirection ?: 'desc';
 		$table->quickSearch = [['message'], 'message'];
+		$table->rowClasses = [
+			'message' => ['ipsTable_wrap'],
+		];
 
 		$table->include = [
 			'id',
