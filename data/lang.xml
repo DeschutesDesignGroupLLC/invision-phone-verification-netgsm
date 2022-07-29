@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
- <app key="netgsm" version="10001">
+ <app key="netgsm" version="10002">
   <word key="__app_netgsm" js="0">Phone Integration By NETGSM</word>
   <word key="menutab__netgsm" js="0">NETGSM</word>
   <word key="menutab__netgsm_icon" js="0">phone</word>
@@ -13,6 +13,7 @@
   <word key="verified" js="0">Verified</word>
   <word key="verified_at" js="0">Verified At</word>
   <word key="phone_number" js="0">Phone Number</word>
+  <word key="country_code" js="0">Country</word>
   <word key="message" js="0">Message</word>
   <word key="message_desc" js="0">A message will only be sent to those with a phone number on file that is verified.</word>
   <word key="message_sent_at" js="0">Message Sent At</word>

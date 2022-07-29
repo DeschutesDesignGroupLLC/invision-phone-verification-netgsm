@@ -1,12 +1,12 @@
-[
-    {
+{
+    "1": {
         "method": "renameTable",
         "params": [
             "netgsm_verifications",
             "netgsm_registrations"
         ]
     },
-    {
+    "2": {
         "method": "addColumn",
         "params": [
             "netgsm_registrations",
@@ -24,4 +24,4 @@
             }
         ]
     }
-]
+}
