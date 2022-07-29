@@ -11,6 +11,9 @@ $lang = array(
 	'menu__netgsm_system_registrations' => 'Registrations',
 	'menu__netgsm_system_settings' => 'Settings',
 
+	// Modules
+	'module__netgsm_system' => 'System',
+
 	// Database Columns
 	'code' => 'Code',
 	'code_sent_at' => 'Code Sent At',
@@ -43,6 +46,9 @@ $lang = array(
 	'netgsm_registration_unverified' => 'The registration has been successfully unverified.',
 	'netgsm_registration_delete' => 'Delete Registration',
 	'netgsm_registration_deleted' => 'The registration has been successfully deleted.',
+
+	// Lost Password
+	'netgsm_lost_password_email' => 'Or reset your password using your email',
 
 	// Settings Controller
 	'netgsm_system_tab' => 'System',

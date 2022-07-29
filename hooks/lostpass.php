@@ -30,7 +30,7 @@ class netgsm_hook_lostpass extends _HOOK_CLASS_
 		$form->add(new \IPS\Helpers\Form\Select('netgsm_phone_country', \IPS\Settings::i()->netgsm_default_country_code ?? null, true, [
 			'options' => \IPS\netgsm\Manager\Netgsm::$countryCodes
 		]));
-		$form->add(new \IPS\Helpers\Form\Tel('netgsm_phone', \IPS\Member::loggedIn()->phone_number, true));
+		$form->add(new \IPS\Helpers\Form\Tel('netgsm_phone', null, true));
 
 		if ($values = $form->values()) {
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
