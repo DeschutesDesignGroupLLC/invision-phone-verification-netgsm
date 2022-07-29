@@ -41,7 +41,7 @@ class _registrations extends \IPS\Dispatcher\Controller
 	 */
 	protected function manage()
 	{
-		$table = new \IPS\Helpers\Table\Db('netgsm_verifications', \IPS\Http\Url::internal( 'app=netgsm&module=system&controller=registrations'));
+		$table = new \IPS\Helpers\Table\Db('netgsm_registrations', \IPS\Http\Url::internal( 'app=netgsm&module=system&controller=registrations'));
 		$table->sortBy = $table->sortBy ?: 'verified_at';
 		$table->sortDirection = $table->sortDirection ?: 'desc';
 		$table->quickSearch = [['code', 'verified'], 'registration'];
@@ -50,7 +50,7 @@ class _registrations extends \IPS\Dispatcher\Controller
 			[
 				'select' => 'core_members.*',
 				'from' => 'core_members',
-				'where' => 'core_members.member_id=netgsm_verifications.member_id'
+				'where' => 'core_members.member_id=netgsm_registrations.member_id'
 			]
 		];
 
@@ -58,6 +58,7 @@ class _registrations extends \IPS\Dispatcher\Controller
 			'id',
 			'member',
 			'phone_number',
+			'country_code',
 			'verified',
 			'verified_at',
 			'code',
@@ -77,13 +78,18 @@ class _registrations extends \IPS\Dispatcher\Controller
 			'verified_at' => function ($value) {
 				return $value ? \IPS\DateTime::ts($value)->html() : null;
 			},
-			'phone_number' => function ($value) {
-				return $value ? (new \IPS\netgsm\Manager\Netgsm())->formatPhoneNumber($value, PhoneNumberFormat::INTERNATIONAL) : null;
+			'phone_number' => function ($value, $row) {
+				$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
+				$parsedPhoneNumber = $netgsmManager->parsePhoneNumber($value, $row['country_code']);
+				return $value ? (new \IPS\netgsm\Manager\Netgsm())->formatPhoneNumber($parsedPhoneNumber, PhoneNumberFormat::INTERNATIONAL) : null;
 			},
+			'country_code' => function ($value) {
+				return \IPS\netgsm\Manager\Netgsm::$countryCodes[$value] ?? null;
+			}
 		];
 
 		$table->filters = [
-			'verified' => '(netgsm_verifications.verified=1)'
+			'verified' => '(netgsm_registrations.verified=1)'
 		];
 
 		$table->rowButtons = function ($row) {

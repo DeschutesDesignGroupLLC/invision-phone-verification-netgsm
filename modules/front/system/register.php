@@ -38,18 +38,18 @@ class _register extends \IPS\Dispatcher\Controller
 		]));
 		$form->add(new \IPS\Helpers\Form\Tel('netgsm_phone', null, true));
 
-		if ($values = $form->values())
-		{
+		if ($values = $form->values()) {
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
 			$parsedPhoneNumber = $netgsmManager->parsePhoneNumber($values['netgsm_phone'], $values['netgsm_phone_country']);
 			$netgsmManager->validatePhoneNumber($parsedPhoneNumber);
 			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($parsedPhoneNumber);
 			$code = $netgsmManager->generateRandomCode();
-			$netgsmManager->sendSms($formattedPhoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
-			$netgsmManager->updateVerificationStatus(\IPS\Member::loggedIn(), [
+			$netgsmManager->sendSms($parsedPhoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
+			$netgsmManager->updateRegistration(\IPS\Member::loggedIn(), [
 				'code' => $code,
 				'code_sent_at' => time(),
-				'phone_number' => $formattedPhoneNumber
+				'phone_number' => $formattedPhoneNumber,
+				'country_code' => $values['netgsm_phone_country']
 			]);
 
 			\IPS\Output::i()->redirect(\IPS\Http\Url::internal(''));
@@ -94,8 +94,9 @@ class _register extends \IPS\Dispatcher\Controller
 		if ($phoneNumber = \IPS\Member::loggedIn()->phone_number) {
 			$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
 			$code = $netgsmManager->generateRandomCode();
-			$response = $netgsmManager->sendSms($phoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
-			$netgsmManager->updateVerificationStatus(\IPS\Member::loggedIn(), [
+			$parsedPhoneNumber = $netgsmManager->parsePhoneNumber($phoneNumber, \IPS\Member::loggedIn()->phone_number_country_code);
+			$response = $netgsmManager->sendSms($parsedPhoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
+			$netgsmManager->updateRegistration(\IPS\Member::loggedIn(), [
 				'code' => $code,
 				'code_sent_at' => time()
 			]);

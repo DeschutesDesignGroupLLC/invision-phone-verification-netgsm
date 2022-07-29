@@ -46,9 +46,10 @@ class _birthdayText extends \IPS\Task
 				['bday_day=?', $todaysDay]
 			]), 'IPS\Member') as $member) {
 
-				if ($phoneNumber = $member->phone_number) {
+				if ($member->phone_number_verified && $phoneNumber = $member->phone_number) {
 					$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
-					$netgsmManager->sendSms($phoneNumber, $textMessage);
+					$parsedPhoneNumber = $netgsmManager->parsePhoneNumber($phoneNumber, $member->phone_number_country_code);
+					$netgsmManager->sendSms($parsedPhoneNumber, $textMessage);
 				}
 			}
 		}

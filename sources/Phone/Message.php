@@ -41,12 +41,4 @@ class _Message extends \IPS\Node\Model
 	{
 		return $this->message;
 	}
-
-	protected function sendSms()
-	{
-		$netgsmManager = new \IPS\netgsm\Manager\_Netgsm();
-		$netgsmManager->sendSms(collect($this->recpient_ids)->map(function () {
-
-		}), $this);
-	}
 }

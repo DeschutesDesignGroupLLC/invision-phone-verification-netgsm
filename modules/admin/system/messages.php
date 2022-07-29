@@ -5,7 +5,6 @@ namespace IPS\netgsm\modules\admin\system;
 
 /* To prevent PHP errors (extending class does not exist) revealing path */
 
-use IPS\netgsm\Phone\_Message;
 use libphonenumber\PhoneNumberFormat;
 
 if ( !\defined( '\IPS\SUITE_UNIQUE_KEY' ) )
@@ -59,7 +58,9 @@ class _messages extends \IPS\Dispatcher\Controller
 				return $value ? \IPS\DateTime::ts($value)->html() : null;
 			},
 			'phone_number' => function ($value) {
-				return $value ? (new \IPS\netgsm\Manager\Netgsm())->formatPhoneNumber($value, PhoneNumberFormat::INTERNATIONAL) : null;
+				$netgsmManager = new \IPS\netgsm\Manager\Netgsm();
+				$parsedPhoneNumber = $netgsmManager->parsePhoneNumber($value);
+				return $value ? (new \IPS\netgsm\Manager\Netgsm())->formatPhoneNumber($parsedPhoneNumber, PhoneNumberFormat::INTERNATIONAL) : null;
 			},
 		];
 
@@ -107,8 +108,8 @@ class _messages extends \IPS\Dispatcher\Controller
 
 			$phoneNumbers = collect($values['recipient_ids'])->filter(function ($member) {
 				return $member->phone_number && $member->phone_number_verified;
-			})->map(function ($member) {
-				return $member->phone_number;
+			})->map(function ($member) use ($netgsmManager) {
+				return $netgsmManager->parsePhoneNumber($member->phone_number, $member->phone_number_country_code);
 			});
 
 			if ($phoneNumbers->isNotEmpty()) {

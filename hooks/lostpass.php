@@ -37,14 +37,14 @@ class netgsm_hook_lostpass extends _HOOK_CLASS_
 			$formattedPhoneNumber = $netgsmManager->formatPhoneNumber($parsedPhoneNumber);
 
 			try {
-				$registration = \IPS\Db::i()->select('*', 'netgsm_verifications', ['phone_number=?', $formattedPhoneNumber])->first();
+				$registration = \IPS\Db::i()->select('*', 'netgsm_registrations', ['phone_number=?', $formattedPhoneNumber])->first();
 				$member = \IPS\Member::load($registration['member_id']);
  			} catch (\UnderflowException) {
 				\IPS\Output::i()->redirect(\IPS\Http\Url::internal('index.php?app=core&module=system&controller=lostpass', 'lostpassword'), 'netgsm_lost_pass_not_found');
 			}
 
 			$vid = $netgsmManager->setMemberAsUnverified($member, false, true);
-			$netgsmManager->sendSms($formattedPhoneNumber, $netgsmManager->composeLostPasswordTextMessage($member, $vid));
+			$netgsmManager->sendSms($parsedPhoneNumber, $netgsmManager->composeLostPasswordTextMessage($member, $vid));
 
 			\IPS\Output::i()->redirect(\IPS\Http\Url::internal(''), 'netgsm_lost_pass_sent');
         }

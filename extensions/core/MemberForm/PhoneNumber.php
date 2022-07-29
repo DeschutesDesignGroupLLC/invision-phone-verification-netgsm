@@ -23,7 +23,7 @@ class _PhoneNumber
 	 */
 	public function process( &$form, $member )
 	{
-		$form->add(new \IPS\Helpers\Form\Select('netgsm_phone_country', \IPS\Settings::i()->netgsm_default_country_code ?? null, false, [
+		$form->add(new \IPS\Helpers\Form\Select('netgsm_phone_country', $member->phone_number_country_code ?? \IPS\Settings::i()->netgsm_default_country_code ?? null, false, [
 			'options' => \IPS\netgsm\Manager\Netgsm::$countryCodes
 		]));
 		$form->add(new \IPS\Helpers\Form\Tel('netgsm_phone', $member->phone_number));
@@ -52,8 +52,9 @@ class _PhoneNumber
 			$netgsmManager->setMemberAsVerified($member);
 		}
 
-		$netgsmManager->updateVerificationStatus($member, [
-			'phone_number' => $netgsmManager->formatPhoneNumber($parsedPhoneNumber)
+		$netgsmManager->updateRegistration($member, [
+			'phone_number' => $netgsmManager->formatPhoneNumber($parsedPhoneNumber),
+			'country_code' => $values['netgsm_phone_country']
 		]);
 	}
 }

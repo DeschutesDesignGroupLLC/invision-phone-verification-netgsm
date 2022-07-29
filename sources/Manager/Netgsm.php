@@ -2,6 +2,7 @@
 
 namespace IPS\netgsm\Manager;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumber;
@@ -306,7 +307,7 @@ class _Netgsm
 	}
 
 	/**
-	 * @param string|PhoneNumber                $phoneNumber
+	 * @param string|PhoneNumber\array          $phoneNumber
 	 * @param string|\IPS\netgsm\Phone\Message  $message
 	 *
 	 * @throws LimitExceeded|
@@ -314,7 +315,7 @@ class _Netgsm
 	 */
 	public function sendSms($phoneNumber, $message)
 	{
-		$phoneNumbers = collect($phoneNumber)->map(function ($phoneNumber) {
+		$phoneNumbers = collect(Arr::wrap($phoneNumber))->map(function ($phoneNumber) {
 			return $this->formatPhoneNumber($phoneNumber);
 		})->unique()->each(function ($phoneNumber) use ($message) {
 			$this->checkRateLimiter($phoneNumber);
@@ -364,20 +365,20 @@ class _Netgsm
 	 *
 	 * @return mixed
 	 */
-	public function updateVerificationStatus($member, array $update = array())
+	public function updateRegistration($member, array $update = array())
 	{
 		$id = $member instanceof \IPS\Member ? $member->member_id : $member;
 		try {
-			$previousEntry = \IPS\Db::i()->select('*', 'netgsm_verifications', [
+			$previousEntry = \IPS\Db::i()->select('*', 'netgsm_registrations', [
 				'member_id=?', $id
 			])->first();
 
-			return \IPS\Db::i()->update('netgsm_verifications', $update, [
+			return \IPS\Db::i()->update('netgsm_registrations', $update, [
 				'member_id=?', $id
 			]);
 		} catch ( \UnderflowException $exception) {}
 
-		return \IPS\Db::i()->insert('netgsm_verifications', array_merge([
+		return \IPS\Db::i()->insert('netgsm_registrations', array_merge([
 			'member_id' => $id
 		], $update));
 	}
@@ -391,7 +392,7 @@ class _Netgsm
 	public function confirmCode($member, $code): bool
 	{
 		try {
-			\IPS\Db::i()->select('*', 'netgsm_verifications', [
+			\IPS\Db::i()->select('*', 'netgsm_registrations', [
 				['member_id=?', $member->member_id],
 				['code=?', $code]
 			])->first();
@@ -446,18 +447,13 @@ class _Netgsm
 	}
 
 	/**
-	 * @param $phoneNumber
+	 * @param  PhoneNumber  $phoneNumber
 	 *
 	 * @return bool
 	 */
-	public function validatePhoneNumber($phoneNumber): bool
+	public function validatePhoneNumber(PhoneNumber $phoneNumber): bool
 	{
-		$phoneUtil = PhoneNumberUtil::getInstance();
-		if (!$phoneNumber instanceof PhoneNumber) {
-			$phoneNumber = $this->parsePhoneNumber($phoneNumber);
-		}
-
-		if (!$phoneUtil->isValidNumber($phoneNumber)) {
+		if (!(PhoneNumberUtil::getInstance())->isValidNumber($phoneNumber)) {
 			throw new \DomainException('The phone number you entered is not valid. Please try again.');
 		}
 
@@ -465,19 +461,14 @@ class _Netgsm
 	}
 
 	/**
-	 * @param       $phoneNumber
-	 * @param  int  $format
+	 * @param  PhoneNumber  $phoneNumber
+	 * @param  int          $format
 	 *
 	 * @return string
 	 */
-	public function formatPhoneNumber($phoneNumber, int $format = PhoneNumberFormat::E164): string
+	public function formatPhoneNumber(PhoneNumber $phoneNumber, int $format = PhoneNumberFormat::E164): string
 	{
-		$phoneUtil = PhoneNumberUtil::getInstance();
-		if (!$phoneNumber instanceof PhoneNumber) {
-			$phoneNumber = $this->parsePhoneNumber($phoneNumber);
-		}
-
-		return $phoneUtil->format($phoneNumber, $format);
+		return (PhoneNumberUtil::getInstance())->format($phoneNumber, $format);
 	}
 
 	/**
@@ -514,7 +505,7 @@ class _Netgsm
 		$member->save();
 
 		\IPS\Db::i()->delete('core_validating', array('member_id=? and new_reg=1', $member->member_id));
-		$this->updateVerificationStatus($member, [
+		$this->updateRegistration($member, [
 			'verified' => 0,
 			'verified_at' => null,
 			'code' => null,
@@ -548,7 +539,7 @@ class _Netgsm
 		$member->save();
 
 		\IPS\Db::i()->delete('core_validating', array('member_id=?', $member->member_id));
-		$this->updateVerificationStatus($member, [
+		$this->updateRegistration($member, [
 			'verified' => 1,
 			'verified_at' => time(),
 			'code' => null,

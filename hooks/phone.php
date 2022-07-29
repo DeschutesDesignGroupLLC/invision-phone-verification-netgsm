@@ -31,12 +31,13 @@ class netgsm_hook_phone extends _HOOK_CLASS_
 			if ($formattedPhoneNumber !== \IPS\Member::loggedIn()->phone_number) {
 
 				$code = $netgsmManager->generateRandomCode();
-				$netgsmManager->sendSms($formattedPhoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
+				$netgsmManager->sendSms($parsedPhoneNumber, $netgsmManager->composeCodeValidationTextMessage($code));
 				$netgsmManager->setMemberAsUnverified(\IPS\Member::loggedIn());
-				$netgsmManager->updateVerificationStatus(\IPS\Member::loggedIn(), [
+				$netgsmManager->updateRegistration(\IPS\Member::loggedIn(), [
 					'code' => $code,
 					'code_sent_at' => time(),
-					'phone_number' => $formattedPhoneNumber
+					'phone_number' => $formattedPhoneNumber,
+                    'country_code' => $values['netgsm_phone_country']
 				]);
 
 				\IPS\Output::i()->redirect(\IPS\Http\Url::internal(''), 'netgsm_phone_number_must_validate');

@@ -126,7 +126,7 @@ class _UpdatePhoneVerifications
 			'phone_number=?', $member->phone_number
 		]);
 
-		\IPS\Db::i()->delete('netgsm_verifications', [
+		\IPS\Db::i()->delete('netgsm_registrations', [
 			'member_id=?', $member->member_id
 		]);
 	}

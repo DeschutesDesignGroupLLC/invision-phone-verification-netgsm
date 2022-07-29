@@ -18,7 +18,7 @@ class netgsm_hook_register extends _HOOK_CLASS_
 	    if (\IPS\Settings::i()->netgsm_registration_enabled && \IPS\Member::loggedIn()->member_id)
 		{
 		    try {
-			    $validation = \IPS\Db::i()->select('*', 'netgsm_verifications', [
+			    $validation = \IPS\Db::i()->select('*', 'netgsm_registrations', [
                     'member_id=?', \IPS\Member::loggedIn()->member_id,
                 ])->first();
 		    } catch (\UnderflowException $exception) {}

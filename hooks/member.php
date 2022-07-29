@@ -34,7 +34,7 @@ class netgsm_hook_member extends _HOOK_CLASS_
     public function get_phone_number()
     {
 	    try {
-		    $phone = \IPS\Db::i()->select('*', 'netgsm_verifications', [
+		    $phone = \IPS\Db::i()->select('*', 'netgsm_registrations', [
 			    'member_id=?', $this->member_id
             ])->first();
 
@@ -45,12 +45,28 @@ class netgsm_hook_member extends _HOOK_CLASS_
     }
 
 	/**
+	 * @return mixed|null
+	 */
+	public function get_phone_number_country_code()
+	{
+		try {
+			$phone = \IPS\Db::i()->select('*', 'netgsm_registrations', [
+				'member_id=?', $this->member_id
+			])->first();
+
+			return $phone['country_code'] ?? null;
+		} catch (\UnderflowException $exception) {}
+
+		return null;
+	}
+
+	/**
 	 * @return bool
 	 */
 	public function get_phone_number_verified()
 	{
 		try {
-			$phone = \IPS\Db::i()->select('*', 'netgsm_verifications', [
+			$phone = \IPS\Db::i()->select('*', 'netgsm_registrations', [
 				['member_id=?', $this->member_id],
                 ['verified=?', 1]
 			])->first();

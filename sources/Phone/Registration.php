@@ -16,7 +16,7 @@ class _Registration extends \IPS\Node\Model
 	 *
 	 * @var string
 	 */
-	public static $databaseTable = 'netgsm_verifications';
+	public static $databaseTable = 'netgsm_registrations';
 
 	/**
 	 * [ActiveRecord] Database Prefix

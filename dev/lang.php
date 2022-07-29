@@ -17,6 +17,7 @@ $lang = array(
 	'verified' => 'Verified',
 	'verified_at' => 'Verified At',
 	'phone_number' => 'Phone Number',
+	'country_code' => 'Country',
 	'message' => 'Message',
 	'message_desc' => 'A message will only be sent to those with a phone number on file that is verified.',
 	'message_sent_at' => 'Message Sent At',
